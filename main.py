@@ -63,15 +63,18 @@ print('There are {} duplicate'.format(SOL.size()))
 def bubbleSort(alist):
     #cot = 0
     item = len(alist)-1
+    duplicates = []
     while item > 0:
         for sort_item in range(0,item):
             #compare with the adjacent element
-            #if alist[sort_item]==alist[sort_item+1]:
+            if alist[sort_item]==alist[sort_item+1]:
+                duplicates.append(sort_item)
                 #print("Have duplicates")
             if alist[sort_item]>=alist[sort_item+1]:
                 #swap both elements
                 alist[sort_item], alist[sort_item+1] = alist[sort_item+1], alist[sort_item]
         item-=1
+    print(len(duplicates))
  
 bubbleSort(result)
 #print(result)
