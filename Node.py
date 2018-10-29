@@ -74,4 +74,52 @@ class function:
                   current = current.getNext()
         return found
 
+    def removeNode(self,item):
+        prev = None
+        curr = self.head
+        while curr:
+            if curr.getID() == item:
+                if prev:
+                    prev.setNext(curr.getNext())
+                else:
+                    self.head = curr.getNext()
+                return True
+                    
+            prev = curr
+            curr = curr.getNext()
+            
+        return False
+""" 
+    def mergeSort(alist,node):
+
+       if len(alist)>1:
+           mid = len(alist)//2
+           lefthalf = alist[:mid]
+           righthalf = alist[mid:]   
+           #recursion
+           mergeSort(lefthalf)
+           mergeSort(righthalf)
+           i=0
+           j=0
+           k=0  
+           while i < len(lefthalf) and j < len(righthalf):
+               if lefthalf[i] < righthalf[j]:
+                   alist[k]=lefthalf[i]
+                   i=i+1
+               else:
+                   alist[k]=righthalf[j]
+                   j=j+1
+               k=k+1
+           while i < len(lefthalf):
+               alist[k]=lefthalf[i]
+               i=i+1
+               k=k+1
+           while j < len(righthalf):
+               alist[k]=righthalf[j]
+               j=j+1
+               k=k+1
+"""
+
+
+
             
