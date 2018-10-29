@@ -36,7 +36,7 @@ def find(LList):
     temp = LList.head
     duplicates = function()
     while temp != None:                     
-        if tempList.search1(temp.getID()): 
+        if tempList.search(temp.getID()): 
             duplicates.append(temp.getID()) 
         temp1 = temp.getID() 
         temp = temp.getNext() 
@@ -68,7 +68,7 @@ print ("Sorted array is:")
 for i in range(len(mylist)): 
 	print ("%d" %mylist[i]), 
 
-
+"""
 def merge(t):
     t = list(t)
     t.sort()
@@ -79,7 +79,7 @@ def merge(t):
     print ("Don't have duplicates"); 
 
 print(merge(TL))
-
+"""
 def boolean(LList):
     seen = [False for i in range(9999)] 
     current = LList.head
