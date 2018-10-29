@@ -3,123 +3,134 @@
 Created on Thu Oct 15 19:53:08 2018
 @author: lenovo
 """
+import copy
+from Node import function
+import numpy as np
+import sys
+#save to one file #1
+result=[]
+with open('activision.txt','r') as f:
+	for line in f:
+		result.append(list(line.strip('\n').split(',')))
 
-class Node(object):
-    item = -1
-    next = None
-    
-    # Constructors #
-    def __init__(self,item): 
-        self.item = item
-        self.next = None
+with open('vivendi.txt','r') as f:
+	for line in f:
+		result.append(list(line.strip('\n').split(',')))
+#print(result)
+#save to one file #2
+"""
+with open("activision.txt") as f1, open("vivendi.txt") as f2, \
+        open("result.txt", "w") as f3:
+    f3.write(f1.read().strip() + f2.read().strip())
+mylist = np.loadtxt("result.txt")
+"""
+#save to one list #3
+TL = function()
+
+Readvivendi = open('vivendi.txt') 
+Linevivendi = Readvivendi.readline()
+
+while Linevivendi:
+    TL.append(int(Linevivendi)) 
+    Linevivendi = Readvivendi.readline()
+Readvivendi.close()
+
+Readactivision = open('activision.txt')
+Lineactivision = Readactivision.readline()
+
+while Lineactivision:
+    TL.append(int(Lineactivision))
+    Lineactivision = Readactivision.readline()
+Readactivision.close()
+"""
+def find(list):
+    temp = list.head
+    duplicates = function()
+    while temp != None:    #compare                 
+        if list.search(temp.getID()): 
+            duplicates.append(temp.getID()) #add list to this list
+        temp1 = temp.getID() #delete last ID
+        list.removeNode(temp1)#to avoid it compare to it self
+        temp = temp.getNext()#next
         
-            # Getters #
-    def getID(self):
-        return self.item
-
-    def getNext(self):
-        return self.next
-    # Setters #
-    def setID(self,newdata):
-        self.item = newdata
-
-    def setNext(self,newnext):
-        self.next = newnext
-
-        
-class function:
-    # Constructor #
-    def __init__(self):
-        self.head = None
+    return duplicates  
     
-        # Traverse list, counting elements to determine size #
-    def size(self):
-        current = self.head
-        count = 0
-        while current != None:
-            count += 1
-            current = current.getNext()
-            
-        return count
-    
-        # Method to print linked list 
-    def printList(self): 
-        temp = self.head 
-          
-        while temp : 
-            print(temp.data, end="->") 
-            temp = temp.next
-    
-    # Function to add of node at the end. 
-    def append(self, new_data): 
-        new_node = Node(new_data) 
-          
-        if self.head is None: 
-            self.head = new_node 
-            return
-        last = self.head 
-          
-        while last.next: 
-            last = last.next
-        last.next = new_node 
-        
-    def search(self, item): #searches self for duplicates
-        current = self.head
-        current = current.getNext() # start search at node after our current one
-        found = False               # otherwise we will always find the item
-        while current != None and not found:    
-            if current.getID() == item:
-                  found = True
-            else:
-                  current = current.getNext()
-        return found
+SOL = find(TL)
 
-    def removeNode(self,item):
-        prev = None
-        curr = self.head
-        while curr:
-            if curr.getID() == item:
-                if prev:
-                    prev.setNext(curr.getNext())
-                else:
-                    self.head = curr.getNext()
-                return True
-                    
-            prev = curr
-            curr = curr.getNext()
-            
-        return False
-""" 
-    def mergeSort(alist,node):
-
-       if len(alist)>1:
-           mid = len(alist)//2
-           lefthalf = alist[:mid]
-           righthalf = alist[mid:]   
-           #recursion
-           mergeSort(lefthalf)
-           mergeSort(righthalf)
-           i=0
-           j=0
-           k=0  
-           while i < len(lefthalf) and j < len(righthalf):
-               if lefthalf[i] < righthalf[j]:
-                   alist[k]=lefthalf[i]
-                   i=i+1
-               else:
-                   alist[k]=righthalf[j]
-                   j=j+1
-               k=k+1
-           while i < len(lefthalf):
-               alist[k]=lefthalf[i]
-               i=i+1
-               k=k+1
-           while j < len(righthalf):
-               alist[k]=righthalf[j]
-               j=j+1
-               k=k+1
+print('There are {} duplicate'.format(SOL.size()))
 """
 
+def bubbleSort(alist):
+    #cot = 0
+    item = len(alist)-1
+    while item > 0:
+        for sort_item in range(0,item):
+            #compare with the adjacent element
+            #if alist[sort_item]==alist[sort_item+1]:
+                #print("Have duplicates")
+            if alist[sort_item]>=alist[sort_item+1]:
+                #swap both elements
+                alist[sort_item], alist[sort_item+1] = alist[sort_item+1], alist[sort_item]
+        item-=1
+ 
+bubbleSort(result)
+#print(result)
 
+"""
+def merge(t):
+    t = list(t)
+    t.sort()#sort the list
+    for i in range(len(t)-1):
+        if t[i] == t[i+1]:#compare each one
+            print ("Have duplicates"); 
+            return 
+    print ("Don't have duplicates"); 
 
-            
+print(merge(result))
+"""
+    
+def merge_sort(li):
+    if len(li) == 1:
+        return li
+    mid = len(li) // 2#Take the middle position
+    #eft and right side
+    left = li[:mid]
+    right = li[mid:]
+    #Split the left and right until there is only one element
+    ll = merge_sort( left )
+    rl =merge_sort( right )
+    if ll == rl:
+        print ("Have duplicate")     
+    return merge(ll , rl)
+
+def merge(left,right):
+    result = []
+    while len(left)>0 and len(right)>0 :
+        if left[0] <= right[0]:
+            result.append( left.pop(0) )
+        else:
+            result.append( right.pop(0) )
+    #After loop, indicating that one of the arrays has no data
+    #add another array to the result array.
+    result += left
+    result += right
+    return result
+li2 = merge_sort(result)
+#print(li2)
+
+def boolean(list):
+    Blist = [False for i in range(1000)] #list of false
+    current = list.head
+    duplicates = function()   
+    while current.getNext() is not None: #loop
+        item = current.getID()#set item
+        if Blist[item]:#if duplicates
+            duplicates.append(item)#add
+        else:
+            Blist[item] = True#change statement    
+        current = current.getNext()
+    return duplicates
+
+SOL = boolean(TL)
+    
+print('There are {} duplicate'.format(SOL.size()))
